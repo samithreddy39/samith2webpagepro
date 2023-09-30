@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web App</title>
+    <title>Search Roll Number</title>
+    <title>Your Web App</title>
+    <style>
+        /* Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://wallup.net/wp-content/uploads/2019/09/801046-sunset-beauty-beautiful-sea-nature-landscape-ocean.jpg'); /* URL or path to your image */
+            background-size: cover; /* Adjust background sizing as needed */
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* Fixed background */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        /*.interactive-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, #ff9900, #ff0000);
+            animation: animateBackground 20s linear infinite; /* Adjust animation duration and timing function */
+        
+
+        /*@keyframes animateBackground {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }*/
+        #search-button {
+        background-color: #0e0ef0; /* Change to your desired background color */
+        color: #f0eee8; /* Change to your desired text color */
+        padding: 10px 20px; /* Adjust padding as needed */
+        font-size: 20px; /* Adjust font size as needed */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        /* Header Styles */
+        h1 {
+            color: #d80f0f;
+            font-size: 50px;
+            margin-top: 100px;
+        }
+
+        /* Result Styles */
+        .result {
+            background-color: #4a10ec;
+            padding: 20px;
+            border: 1px solid #450cca;
+            margin: 20px;
+            box-shadow: 0px 0px 10px rgba(208, 8, 8, 0.1);
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .result h2 {
+            font-size: 500px;
+            margin-bottom: 1px;
+        }
+
+        .result p {
+            font-size: 16px;
+            line-height: 50;
+        }
+    </style>
+</head>
+<body>
+    <div class="interactive-background"></div>
+    <h1>Search Roll Number</h1>
+    <input type="text" id="rollNumber" placeholder="Enter Roll Number">
+    <button type="button" id="search-button" onclick="searchrollnumber()">Search</button>
+    <div id="result"></div>
+
+    <script >
+         function searchrollnumber() {
+
+const rollNumber = document.getElementById("rollNumber").value;
+
+// Send a GET request to your Flask server
+fetch(`/search?rollNumber=${rollNumber}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Check if the response contains the "result" key
+        if ('result' in data) {
+            const result = data.result;
+            document.getElementById("result").innerHTML = `Result: ${result}`;
+        } else {
+            document.getElementById("result").innerHTML = 'Error: Invalid response format';
+        }
+    })
+    .catch(error => {
+        document.getElementById("result").innerHTML = `Error: ${error.message}`;
+    });
+}
+    </script>
+</body>
+</html>
